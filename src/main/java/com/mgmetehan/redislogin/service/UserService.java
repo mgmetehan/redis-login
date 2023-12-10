@@ -8,6 +8,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -58,5 +60,20 @@ public class UserService {
     private String generateRandomToken() {
         // Generate a random UUID-based token (you can use a more secure method)
         return UUID.randomUUID().toString();
+    }
+
+    public String deleteUser(String id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            user.get().setDeleted(true);
+            userRepository.save(user.get());
+            return "User deleted";
+        } else {
+            return "User not found";
+        }
+    }
+
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 }

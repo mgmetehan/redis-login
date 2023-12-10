@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Getter
@@ -18,6 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
+@Where(clause = "deleted = false")
 public class User {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -25,4 +27,5 @@ public class User {
     private String id;
     private String username;
     private String password;
+    private boolean deleted = false;
 }

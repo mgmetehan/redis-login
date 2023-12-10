@@ -2,15 +2,20 @@ package com.mgmetehan.redislogin.controller;
 
 import com.mgmetehan.redislogin.dto.CreateUserDto;
 import com.mgmetehan.redislogin.dto.LoginUserDto;
+import com.mgmetehan.redislogin.model.User;
 import com.mgmetehan.redislogin.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -41,4 +46,16 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }
+
+    @DeleteMapping()
+    private ResponseEntity<String> deleteUser(@RequestParam String id) {
+        return ResponseEntity.ok(userService.deleteUser(id));
+    }
+
+    @GetMapping()
+    private ResponseEntity<List<User>> getUsers() {
+        return ResponseEntity.ok(userService.getUsers());
+    }
+
+
 }
